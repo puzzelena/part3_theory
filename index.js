@@ -1,5 +1,5 @@
-const express = require('express')
-const app = express()
+const express = require('express') // importing express function
+const app = express() // that is used to create an express application stored in the app variable
 
 let notes = [
     {
@@ -22,12 +22,14 @@ let notes = [
     }
   ]
 
-  app.get('/', (request, response) => {
+  app.get('/', (request, response) => { // an event handler, that is used to handle HTTP GET requests made to the application's / root
+    // request parameter contains all of the information of the HTTP request
+    // response parameter is used to define how the request is responded to.
     response.send('<h1>Hello World!</h1>')
   })
   
-  app.get('/api/notes', (request, response) => {
-    response.json(notes)
+  app.get('/api/notes', (request, response) => { // an event handler, that handles HTTP GET requests made to the notes path of the application
+    response.json(notes) // request is responded to with the json method of the response object
   })
   
   
