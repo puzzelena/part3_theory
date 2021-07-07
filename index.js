@@ -1,10 +1,30 @@
 const http = require('http') //  the application imports Node's built-in web server module
 
-const app = http.createServer((request, response) => { // createServer method of the http module to create a new web server
-  response.writeHead(200, { 'Content-Type': 'text/plain' }) // The request is responded to with the status code 200, with the Content-Type header set to text/plain
-  response.end('Hello World') // the content of the site to be returned set to Hello World
-})
-// The last rows bind the http server assigned to the app variable, to listen to HTTP requests sent to the port 3001
+let notes = [
+    {
+      id: 1,
+      content: "HTML is easy",
+      date: "2019-05-30T17:30:31.098Z",
+      important: true
+    },
+    {
+      id: 2,
+      content: "Browser can execute only Javascript",
+      date: "2019-05-30T18:39:34.091Z",
+      important: false
+    },
+    {
+      id: 3,
+      content: "GET and POST are the most important methods of HTTP protocol",
+      date: "2019-05-30T19:20:14.298Z",
+      important: true
+    }
+  ]
+  const app = http.createServer((request, response) => {
+    response.writeHead(200, { 'Content-Type': 'application/json' })
+    response.end(JSON.stringify(notes))
+  })
+  
 const PORT = 3001
 app.listen(PORT)
 console.log(`Server running on port ${PORT}`)
