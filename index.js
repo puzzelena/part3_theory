@@ -47,13 +47,28 @@ let notes = [
     response.status(204).end()
   }) */
 
-  app.post('/api/notes', (request, response) => {
+  const generateId = () => {
     const maxId = notes.length > 0
-      ? Math.max(...notes.map(n => n.id)) 
+      ? Math.max(...notes.map(n => n.id)) // creates a new array that contains all the ids of the notes
       : 0
+    return maxId + 1
+  }
   
-    const note = request.body
-    note.id = maxId + 1
+  app.post('/api/notes', (request, response) => {
+    const body = request.body
+  
+    if (!body.content) {
+      return response.status(400).json({  // If the received data is missing a value for the content property, the server will respond to the request with the status code 400 bad request
+        error: 'content missing'  // However, notes.map(n => n.id) is an array so it can't directly be given as a parameter to Math.max. The array can be transformed into individual numbers by using the "three dot" spread syntax ....
+      })
+    }
+  
+    const note = {
+      content: body.content,
+      important: body.important || false, // If the important property is missing, we will default the value to false
+      date: new Date(),
+      id: generateId(),
+    }
   
     notes = notes.concat(note)
   
