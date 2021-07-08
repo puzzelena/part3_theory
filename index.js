@@ -36,6 +36,13 @@ let notes = [
       } // The note is then returned to the sender of the request
   })
   })
+
+  app.delete('/api/notes/:id', (request, response) => { // Deletion happens by making an HTTP DELETE request to the url of the resource
+    const id = Number(request.params.id)
+    notes = notes.filter(note => note.id !== id)
+  
+    response.status(204).end()
+  })
   
   
 const PORT = 3001
