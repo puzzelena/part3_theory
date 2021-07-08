@@ -47,9 +47,16 @@ let notes = [
     response.status(204).end()
   }) */
 
-  app.post('/api/notes', (request, response) => { // The event handler function can access the data from the body property of the request object
-    const note = request.body // Without the json-parser, the body property would be undefined
-    console.log(note)
+  app.post('/api/notes', (request, response) => {
+    const maxId = notes.length > 0
+      ? Math.max(...notes.map(n => n.id)) 
+      : 0
+  
+    const note = request.body
+    note.id = maxId + 1
+  
+    notes = notes.concat(note)
+  
     response.json(note)
   })
   
