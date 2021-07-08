@@ -1,5 +1,8 @@
+
 const express = require('express') // importing express function
 const app = express() // that is used to create an express application stored in the app variable
+
+app.use(express.json()) // access the data
 
 let notes = [
     {
@@ -37,11 +40,17 @@ let notes = [
   })
   })
 
-  app.delete('/api/notes/:id', (request, response) => { // Deletion happens by making an HTTP DELETE request to the url of the resource
+/*   app.delete('/api/notes/:id', (request, response) => { // Deletion happens by making an HTTP DELETE request to the url of the resource
     const id = Number(request.params.id)
     notes = notes.filter(note => note.id !== id)
   
     response.status(204).end()
+  }) */
+
+  app.post('/api/notes', (request, response) => { // The event handler function can access the data from the body property of the request object
+    const note = request.body // Without the json-parser, the body property would be undefined
+    console.log(note)
+    response.json(note)
   })
   
   
