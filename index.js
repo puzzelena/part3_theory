@@ -21,15 +21,20 @@ let notes = [
       important: true
     }
   ]
-
-  app.get('/', (request, response) => { // an event handler, that is used to handle HTTP GET requests made to the application's / root
-    // request parameter contains all of the information of the HTTP request
-    // response parameter is used to define how the request is responded to.
-    response.send('<h1>Hello World!</h1>')
-  })
   
-  app.get('/api/notes', (request, response) => { // an event handler, that handles HTTP GET requests made to the notes path of the application
-    response.json(notes) // request is responded to with the json method of the response object
+  app.get('/api/notes/:id', (request, response) => { // will handle all HTTP GET requests, that are of the form /api/notes/SOMETHING, where SOMETHING is an arbitrary string
+    const id = Number(request.params.id) // The id parameter in the route of a request, can be accessed through the request object
+    console.log(id)
+    const note = notes.find(note => {
+        console.log(note.id, typeof note.id, id, typeof id, note.id === id) // In JavaScript, the "triple equals" comparison === considers all values of different types to not be equal by default, meaning that 1 is not '1'
+        note.id === id // find method of arrays is used to find the note with an id that matches the parameter.
+    console.log(note)
+    if (note) {
+        response.json(note)
+      } else {
+        response.status(404).end() // Since no data is attached to the response, we use the status method for setting the status, 
+      } // The note is then returned to the sender of the request
+  })
   })
   
   
