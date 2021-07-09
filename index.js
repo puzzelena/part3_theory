@@ -3,15 +3,15 @@ const app = express()
 
 app.use(express.json())
 
-const requestLogger = (request, response, next) => {
+const requestLogger = (request, response, next) => { // Middleware is a function that receives three parameters
   console.log('Method:', request.method)
   console.log('Path:  ', request.path)
   console.log('Body:  ', request.body)
   console.log('---')
-  next()
+  next() // The next function yields control to the next middleware
 }
 
-app.use(requestLogger)
+app.use(requestLogger) // Middleware are taken into use
 
 let notes = [
   {
